@@ -18,6 +18,6 @@ void inicializar_grilla () {
 
             //se agrega la casilla a la grilla
             grilla[i][j] = actual;
-        } 
+        }
     }
 }
