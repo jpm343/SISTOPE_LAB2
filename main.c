@@ -10,7 +10,7 @@ int dim_X = 2;
 int dim_Y = 2;
 float delta = 1;
 int flag_mostrar = 0;
-Casilla **grilla;
+casilla_t **grilla;
 
 void getFlags(int argc, char **argv){
     /*
@@ -45,10 +45,10 @@ void getFlags(int argc, char **argv){
     }
 }
 
-void inicializar_grilla();
-
 int main(int argc, char **argv) {
-    getFlags(argc, argv);
-    //printf("%d - %d - %d - %d - %.2f - %d\n", cant_fotones, dist_MAX, dim_X, dim_Y, delta, flag_mostrar);
+    getFlags(argc, argv); // obtiene flags
+    grilla = grilla_create(dim_X, dim_Y); // crea una grilla
+    print_grilla(grilla, dim_X, dim_Y); // printea grilla
+    grilla_free(grilla, dim_X, dim_Y); // lobera memoria de la grilla
     return 0;
 }
