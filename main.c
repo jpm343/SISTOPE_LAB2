@@ -4,6 +4,8 @@
 #include <pthread.h>
 #include "grilla.h"
 
+// ejecucion de prueba: $./main.o -n 10 -L 2 -X 4 -Y 4 -d 1.5 
+
 int cant_fotones = 1;
 int dist_MAX = 2;//puede ser float?
 int dim_X = 2;
@@ -11,6 +13,11 @@ int dim_Y = 2;
 float delta = 1;
 int flag_mostrar = 0;
 casilla_t **grilla;
+
+typedef struct pair{
+    int first;
+    int second;
+}pair;
 
 void getFlags(int argc, char **argv){
     /*
@@ -45,10 +52,24 @@ void getFlags(int argc, char **argv){
     }
 }
 
+void *transferencia_radiativa(){
+    printf("foton XD\n");
+    return NULL;
+}
+
 int main(int argc, char **argv) {
     getFlags(argc, argv); // obtiene flags
     grilla = grilla_create(dim_X, dim_Y); // crea una grilla
-    print_grilla(grilla, dim_X, dim_Y); // printea grilla
+
+    int i;
+    pthread_t fotones[cant_fotones];
+    for(i = 0; i < cant_fotones; i++){
+        pthread_create(&fotones[i], NULL, transferencia_radiativa, NULL);
+    }
+    for(i = 0; i < cant_fotones; i++){
+        pthread_join(fotones[i], NULL);
+    }
+
     grilla_free(grilla, dim_X, dim_Y); // lobera memoria de la grilla
     return 0;
 }
