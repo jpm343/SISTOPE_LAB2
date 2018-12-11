@@ -1,5 +1,3 @@
-//suponiendo: grilla, x e y como variables globales
-
 //Estrcutra casilla. Base para estructura grilla. Cada Casilla tiene su propio mutex
 typedef struct __casilla_t {
     pthread_mutex_t lock;
@@ -22,13 +20,16 @@ casilla_t** grilla_create(int dim_X, int dim_Y){
     return new;
 }
 
-void print_grilla(casilla_t **grilla, int dim_X, int dim_Y){
+void fprint_grilla(casilla_t **grilla, int dim_X, int dim_Y){
+    FILE *fp;
+    fp = fopen("salida.out", "w");
     int i, j;
     for(i = 0; i < dim_X; i++){
         for(j = 0; j < dim_Y; j++){
-            printf("%d ", grilla[i][j].energia);
-        }printf("\n");
+            fprintf( fp, "<%d [%d][%d]>\n", grilla[i][j].energia, i, j);
+        }
     }
+    fclose(fp);
 }
 
 void grilla_free(casilla_t **grilla, int dim_X, int dim_Y){
