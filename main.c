@@ -100,8 +100,8 @@ void *transferenciaRadiativa(){
 
         //verificar si se escapa de la grilla
         if((coordX >= dim_X || coordY >= dim_Y) || (coordX < 0 || coordY < 0)) {
-            printf("foton se escapo de la grilla\n");
-            printf("(cas: y %d - x %d)\n", coordY, coordX);
+            if(flag_mostrar)
+                printf("foton en la casilla y:%d , x:%d. evento: foton se escapa de la grilla\n", coordY, coordX);
             return NULL;
         }        
 
@@ -112,18 +112,18 @@ void *transferenciaRadiativa(){
             hayAbsorcion = 1;
         }
 
-        //printf("pos: y %f - x %f\n actual: %f total: %f\n", posY, posX, l, distanciaTotal);
-        printf("rel: y %f - x %f\n", relativaY, relativaX);
-        printf("cas: y %d - x %d\n", coordY, coordX);
-
         //caso absorcion
         if(hayAbsorcion) {
             pthread_mutex_lock(&(grilla[coordX][coordY]).lock);
             (grilla[coordX][coordY]).energia++;
             pthread_mutex_unlock(&(grilla[coordX][coordY]).lock);
-            printf("energia[y][x]: %d\n", (grilla[coordX][coordY]).energia);
-        } else {
-            printf("no hay absorcion\n");
+
+            if (flag_mostrar) {
+                printf("foton en la casilla y:%d , x:%d. evento: absorcion\n", coordY, coordX);
+            }        
+        } 
+        else if (!hayAbsorcion && flag_mostrar){
+            printf("foton en la casilla y:%d , x:%d. evento: difusion\n", coordY, coordX);
         }        
     }
     return NULL;
