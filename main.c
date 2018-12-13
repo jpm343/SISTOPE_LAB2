@@ -114,9 +114,9 @@ void *transferenciaRadiativa(){
 
         //caso absorcion
         if(hayAbsorcion) {
-            pthread_mutex_lock(&(grilla[coordX][coordY]).lock);
-            (grilla[coordX][coordY]).energia++;
-            pthread_mutex_unlock(&(grilla[coordX][coordY]).lock);
+            pthread_mutex_lock(&(grilla[coordY][coordX]).lock);
+            (grilla[coordY][coordX]).energia++;
+            pthread_mutex_unlock(&(grilla[coordY][coordX]).lock);
 
             if (flag_mostrar) {
                 printf("foton en la casilla y:%d , x:%d. evento: absorcion\n", coordY, coordX);
