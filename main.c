@@ -145,9 +145,9 @@ int main(int argc, char **argv) {
     for(i = 0; i < cant_fotones; i++){
         pthread_join(fotones[i], NULL);
     }
-    fprint_grilla(grilla, dim_X, dim_Y);
+    fprint_grilla(grilla, dim_Y, dim_X);
     printf("\ngrilla mostrada en salida.out\n");
 
-    grilla_free(grilla, dim_X, dim_Y); // lobera memoria de la grilla
+    grilla_free(grilla, dim_Y, dim_X); // lobera memoria de la grilla
     return 0;
 }
