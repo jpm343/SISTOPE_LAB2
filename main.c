@@ -131,7 +131,7 @@ void *transferenciaRadiativa(){
 
 int main(int argc, char **argv) {
     getFlags(argc, argv); // obtiene flags
-    grilla = grilla_create(dim_X, dim_Y); // crea una grilla
+    grilla = grilla_create(dim_Y, dim_X); // crea una grilla
 
     //para generar numeros aleatorios
     time_t t;
