@@ -139,16 +139,14 @@ int main(int argc, char **argv) {
 
     int i;
     pthread_t fotones[cant_fotones];
-    printf("grilla antes\n");
-    print_grilla(grilla, dim_X, dim_Y);
     for(i = 0; i < cant_fotones; i++){
         pthread_create(&fotones[i], NULL, transferenciaRadiativa, NULL);
     }
     for(i = 0; i < cant_fotones; i++){
         pthread_join(fotones[i], NULL);
     }
-    printf("\ngrilla despues\n");
-    print_grilla(grilla, dim_X, dim_Y);
+    fprint_grilla(grilla, dim_X, dim_Y);
+    printf("\ngrilla mostrada en salida.out\n");
 
     grilla_free(grilla, dim_X, dim_Y); // lobera memoria de la grilla
     return 0;
