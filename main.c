@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <math.h>
+#include <assert.h>
 #include "grilla.h"
 
 #define PI 3.1415926535
@@ -40,9 +41,11 @@ void getFlags(int argc, char **argv){
                 break;
             case 'X':
                 dim_X = atoi(optarg);
+                assert((dim_X%2 == 0) && "dimension X debe ser un valor par");
                 break;
             case 'Y':
                 dim_Y = atoi(optarg);
+                assert((dim_Y%2 == 0) && "dimension Y debe ser un valor par");
                 break;
             case 'd':
                 delta = atof(optarg);
@@ -53,6 +56,22 @@ void getFlags(int argc, char **argv){
             default:
                 break;
         }
+    }
+}
+
+//funcion para aproximar coordenada
+//entradas: puntero a la coordenada, dimension (Y o X) y posicion relativa en la grilla
+void aproximarCoordenada(int *coordenada, float dimension, float posicionRelativa) {
+    float i = 0;
+    int j = 0;
+    while(i < dimension) {
+        if(posicionRelativa == i) {
+            printf("hubo aproximacion\n");
+            ++*coordenada;
+            return;
+        }
+        j++;
+        i+=(j*delta);
     }
 }
 
@@ -97,6 +116,10 @@ void *transferenciaRadiativa(){
 
         coordX = relativaX/delta;
         coordY = relativaY/delta;
+
+        //si cae en algun borde, es necesario redefinir la coordenada (aproximarla)
+        aproximarCoordenada(&coordX, dim_X, relativaX);
+        aproximarCoordenada(&coordY, dim_Y, relativaY);
 
         //verificar si se escapa de la grilla
         if((coordX >= dim_X || coordY >= dim_Y) || (coordX < 0 || coordY < 0)) {
